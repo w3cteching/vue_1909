@@ -2,9 +2,18 @@ import axios from "axios";
 
 import env from "./env.js";
 
+const vipUrl = "/api/app/";
+
+const envType = process.env.BUILD_ENV;
+
+const urlObj = require(`../config/${envType}.js`);
+
+const prodUrl='https://www.365msmk.com'
+
 //创建一个axios实例
 const service = axios.create({
-  baseURL: env.prod.baseUrl
+  //baseURL: urlObj.BASE_URL + vipUrl
+  baseURL: prodUrl + vipUrl
 });
 
 //请求拦截

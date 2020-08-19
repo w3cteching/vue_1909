@@ -60,8 +60,8 @@ svg.icon.active {
 }
 
 .main {
-  height: 400px;
-  background: #f00;
+  // height: 400px;
+  // background: #f00;
 }
 
 .ft {
@@ -88,12 +88,11 @@ svg.icon.active {
   }
 }
 
-/* .main {
+ .main {
   position: absolute;
-  top:.444rem;
-  bottom:.44rem;
+  top:100px;
+
   left:0;
   right:0;
-  background: #f00;
-} */
+} 
 </style>

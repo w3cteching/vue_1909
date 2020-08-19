@@ -8,7 +8,7 @@ import request from "./request";
 
 export function getBanners() {
   return request({
-    url: "/api/app/banner",
+    url: "/banner",
     method: "GET"
   });
 }
@@ -16,7 +16,7 @@ export function getBanners() {
 //获取验证码
 export function get_sms_code(data) {
   return request({
-    url: "/api/app/smsCode",
+    url: "/smsCode",
     method: "POST",
     data
   });
@@ -25,7 +25,7 @@ export function get_sms_code(data) {
 //用户登录
 export function login(data) {
   return request({
-    url: "/api/app/login",
+    url: "login",
     method: "POST",
     data
   });
@@ -34,7 +34,7 @@ export function login(data) {
 //获取课程列表
 export function lessonList(params) {
   return request({
-    url: "/api/app/courseBasis",
+    url: "courseBasis",
     method: "GET",
     params
   });

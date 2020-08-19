@@ -3,14 +3,29 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-Vue.config.productionTip = false;
+import * as filters from './filters'
 
-import './http/request'
+console.log('filters:',filters)
+
+
+Vue.config.productionTip = false;
 
 //重置样式
 import "./public/css/reset.css";
 //引入rem适配文件
 //import "./utils/rem";
+
+Object.keys(filters).forEach(key => { 
+
+    console.log('key:',key)
+   
+  Vue.filter(key,filters[key])
+
+
+})
+
+
+
 
 new Vue({
   router,

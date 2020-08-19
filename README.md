@@ -263,4 +263,157 @@ type	否	int	类型 1.课程 2.文库 3.图书 4.资讯 5.话题 6.面授 (不�
 
 ```
 
+```
+axios官方：https://github.com/axios/axios
+
+axios.get(url).then()
+axios.post()
+axios.put()
+axois.delete()
+
+axios({
+	url:'',
+	headers:{},
+	data:{},  //post,PUT,DELETE,PATCH
+	params:{}  //get
+
+})
+
+
+axios.get('',{headers:{}})
+
+```
+
+---
+
+
+
+# 一、axios数据请求封装
+
+- env.js
+- request.js
+- api.js
+
+# 二、生产环境，开发环境切换
+
+1.第一种方法：通过配置.env文件来实现
+
+```
+参考：https://cli.vuejs.org/zh/guide/mode-and-env.html
+```
+
+2. 第二种方法
+    - 第一步：通过创建不同环境js文件，再通过cross-env来切换
+
+```
+ config
+    dev.js
+    
+    prod.js
+    
+
+dev.js
+module.exports = {
+  BASE_URL: "https://test.365msmk.com"
+};
+
+prod.js
+
+module.exports = {
+  BASE_URL: "https://www.365msmk.com"
+};
+
+
+```
+
+- 第二步：安装cross-env并在package.json中配置要传递的参数
+
+```
+npm install cross-env -D
+
+package.json中配置
+
+"scripts": {
+    "serve": "cross-env BUILD_ENV=dev vue-cli-service serve",
+    "build": "cross-env BUILD_ENV=prod vue-cli-service build"
+  }
+```
+
+- 第三步：修改vue.config.js添加对webpack的配置
+
+```
+module.exports = {
+ .....
+  chainWebpack: config => {
+    config.plugin("define").tap(args => {
+      args[0]['process.env'].BUILD_ENV = JSON.stringify(process.env.BUILD_ENV);
+      return args;
+    });
+  }
+};
+
+```
+
+- 在业务代码做环境的切换
+
+```
+//读取process.env常量对象中的BUILD_ENV
+const envType = process.env.BUILD_ENV;
+
+const urlObj = require(`../config/${envType}.js`);
+
+//创建一个axios实例
+const service = axios.create({
+  baseURL: urlObj.BASE_URL + vipUrl
+});
+
+
+```
+
+
+
+# 三、过滤器与moment日期库的使用
+
+- 过滤器
+
+    ```
+    1.全局过滤器
+    
+    定义：
+      Vue.filter('过滤器名称',function(a,b,c) {
+         
+          //....
+          
+         return ...
+      
+      
+      })
+      
+      使用：
+      
+      {{ num | 过滤器名称(v1,v2) }}
+      
+    
+    
+    2.局部过滤器
+    
+    3.总结：过滤器使用场景：用于将后台数据处理成用户最终显示的数据格式
+    
+    例如：性别，支付状态，物流状态，时间戳。。。。。。
+    
+    ```
+
+    
+
+- moment
+
+```
+moment官网：http://momentjs.cn/docs/
+npm i moment
+
+ 格式： moment(时间戳).format("YYYY年MM月DD日，HH时mm分SS秒");
+ 
+ 格式显示：http://momentjs.cn/docs/#/displaying/
+```
+
 
