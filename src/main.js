@@ -5,6 +5,8 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+import './http/request'
+
 //重置样式
 import "./public/css/reset.css";
 //引入rem适配文件
