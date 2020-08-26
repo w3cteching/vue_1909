@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <div class="hd flex-center ">首页</div>
-    <div class="main flex-center ">
+    <div class="hd flex-center">首页---{{ num }}</div>
+    <div class="main flex-center">
       <router-view></router-view>
     </div>
-    <div class="ft flex-center ">
+    <div class="ft flex-center">
       <router-link v-for="item in navlist" :key="item.id" :to="item.url">
         <svg class="icon">
-          <use :xlink:href="`#icon-${item.svgName}`"></use>
+          <use :xlink:href="`#icon-${item.svgName}`" />
         </svg>
-         <span>{{ item.navName }}</span>
+        <span>{{ item.navName }}</span>
       </router-link>
     </div>
   </div>
@@ -18,22 +18,44 @@
 <script>
 export default {
   name: "app",
+  provide(){
+    return {
+      app:this
+    }
+  },
   data() {
     return {
+      num: 10,
       navlist: [
         { id: 1001, navName: "首页", svgName: "home", url: "/home" },
-        { id: 1002, navName: "分类", svgName: "leimupinleifenleileibie", url: "/cate" },
-        { id: 1003, navName: "购物车", svgName: "gouwuchezhengpin", url: "/shopping" },
+        {
+          id: 1002,
+          navName: "分类",
+          svgName: "leimupinleifenleileibie",
+          url: "/cate"
+        },
+        {
+          id: 1003,
+          navName: "购物车",
+          svgName: "gouwuchezhengpin",
+          url: "/shopping"
+        },
         { id: 1004, navName: "我的", svgName: "wode", url: "/my" }
       ]
     };
+  },
+  methods: {
+    add() {
+      console.log('add')
+      this.num++;
+    }
   }
 };
 </script>
 
 <style lang="scss">
 .active {
-  color:#0f0;
+  color: #0f0;
 }
 .icon {
   width: 50px;
@@ -59,11 +81,6 @@ svg.icon.active {
   top: 0;
 }
 
-.main {
-  // height: 400px;
-  // background: #f00;
-}
-
 .ft {
   position: absolute;
   left: 0;
@@ -74,25 +91,26 @@ svg.icon.active {
   color: #fff;
   display: flex;
   justify-content: space-around;
-  padding:10px 16px;
+  padding: 10px 16px;
 }
 
-.ft>a {
+.ft > a {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   span {
-    margin-top:10px;
+    margin-top: 10px;
   }
 }
 
- .main {
+.main {
   position: absolute;
-  top:100px;
-
-  left:0;
-  right:0;
-} 
+  top: 88px;
+  bottom: 88px;
+  left: 0;
+  right: 0;
+  overflow: scroll;
+}
 </style>

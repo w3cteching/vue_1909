@@ -1,30 +1,54 @@
 <template>
   <div class="home">
-    <ul class="list">
-      <li v-for="item in list" :key="item.id">
-        <p>{{ item.title }}</p>
-        <p>{{ item.start_play_date | dateTime}}~~{{ item.end_play_date |dateTime }}</p>
-      </li>
-    </ul>
+     <!-- <input type="text" v-model="s" class="username"> -->
+     <!-- <input type="text" :value="s" @input="s=$event.target.value" class="username"> -->
+     <baseInput v-model="s"></baseInput>
+     <p>{{ s }}</p>
+
+     <button @click="getData">测试混入获取数据---{{ msg }}</button>
+    
   </div>
 </template>
 
 <script>
 import { lessonList } from "../http/api";
+import {mapState,mapActions,mapGetters} from 'vuex'
+import baseInput from '@/components/baseInput'
+import GetUserDataMixIn from '@/mixins/getData'
 export default {
   name: "Home",
+  mixins:[GetUserDataMixIn],
   data() {
     return {
+      s:'张三',
       tel: "",
       page: 1,
       limit: 10,
       list: []
     };
   },
+  
   created() {
     this.getKeCheng();
   },
+  computed:{
+    total() {},
+    // myToken() {
+    //   return this.$store.state.login.myToken
+    // }
+   // ...mapState(['myToken','usrerRole']),
+    ...mapGetters(['myToken','count'])
+    //vuex相关数据,state,getters
+    // token() {
+    //   return this.$store.state.token
+    // },
+    // usrerRole() {
+    //   return this.$store.state.usrerRole
+    // }
+
+  },
   methods: {
+   
     //获取课程列表
     getKeCheng() {
       lessonList({
@@ -41,12 +65,26 @@ export default {
           this.list = list;
         }
       });
-    }
-  }
+    },
+    setValue() {
+      
+     // this.$store.dispatch('changeTotal',this.limit)
+     this.changeTotal(this.limit)
+   
+    },
+    ...mapActions(['login']),
+   
+  },
+  components:{baseInput}
 };
 </script>
 
 <style lang="scss">
+.username {width:400px;height:80px;}
+.home {
+  width:100%;
+  height:100%;
+}
 .list {
   li {
     padding: 20px 10px;
